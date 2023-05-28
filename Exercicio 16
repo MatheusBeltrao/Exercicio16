@@ -1,0 +1,74 @@
+import java.util.*;
+
+public class Exercicio16 {
+    public static void main(String[] args) {
+
+        Stack<Integer> pilha1 = new Stack<>();
+        Stack<Integer> pilha2 = new Stack<>();
+        Stack<Integer> pilha3 = new Stack<>();
+
+        Random random = new Random();
+        for (int i = 0; i < 100; i++) {
+            int numeroSorteado = random.nextInt(9) + 1;
+            if (numeroSorteado >= 1 && numeroSorteado <= 3) {
+                pilha1.push(numeroSorteado);
+            } else if (numeroSorteado >= 4 && numeroSorteado <= 6) {
+                pilha2.push(numeroSorteado);
+            } else {
+                pilha3.push(numeroSorteado);
+            }
+        }
+
+        System.out.println("Pilha 1: " + pilha1);
+        System.out.println("Pilha 2: " + pilha2);
+        System.out.println("Pilha 3: " + pilha3);
+
+        int totalSorteados = 0;
+        while (!pilha1.isEmpty() && !pilha2.isEmpty() && !pilha3.isEmpty() && totalSorteados < 100) {
+            int numeroSorteadoFase2 = random.nextInt(3) + 1;
+
+            if (numeroSorteadoFase2 == 1) {
+                if (!pilha2.isEmpty() && !pilha3.isEmpty()) {
+                    int numeroPilha2 = pilha2.pop();
+                    int numeroPilha3 = pilha3.pop();
+                    pilha1.push(numeroPilha2);
+                    pilha1.push(numeroPilha3);
+                    System.out.println("Empilhando os números " + numeroPilha2 + " e " + numeroPilha3 + " na pilha 1");
+                    totalSorteados++;
+                }
+            } else if (numeroSorteadoFase2 == 2) {
+                if (!pilha1.isEmpty() && !pilha3.isEmpty()) {
+                    int numeroPilha1 = pilha1.pop();
+                    int numeroPilha3 = pilha3.pop();
+                    pilha2.push(numeroPilha1);
+                    pilha2.push(numeroPilha3);
+                    System.out.println("Empilhando os números " + numeroPilha1 + " e " + numeroPilha3 + " na pilha 2");
+                    totalSorteados++;
+                }
+            } else if (numeroSorteadoFase2 == 3) {
+                if (!pilha1.isEmpty() && !pilha2.isEmpty()) {
+                    int numeroPilha1 = pilha1.pop();
+                    int numeroPilha2 = pilha2.pop();
+                    pilha3.push(numeroPilha1);
+                    pilha3.push(numeroPilha2);
+                    System.out.println("Empilhando os números " + numeroPilha1 + " e " + numeroPilha2 + " na pilha 3");
+                    totalSorteados++;
+                }
+            }
+        }
+
+        System.out.println("\nPilha 1: " + pilha1);
+        System.out.println("Pilha 2: " + pilha2);
+        System.out.println("Pilha 3: " + pilha3);
+
+        if (pilha1.isEmpty()) {
+            System.out.println("O programa foi encerrado porque a pilha 1 está vazia.");
+        } else if (pilha2.isEmpty()) {
+            System.out.println("O programa foi encerrado porque a pilha 2 está vazia.");
+        } else if (pilha3.isEmpty()) {
+            System.out.println("O programa foi encerrado porque a pilha 3 está vazia.");
+        } else if (totalSorteados >= 100) {
+            System.out.println("O programa foi encerrado porque atingiu o total de 100 números sorteados.");
+        }
+    }
+}
